@@ -8,7 +8,7 @@ public class Main {
         System.out.println("Задание 1");
         System.out.println("Напечатать только нечетные числа в консоль ");
         printOodNumber();
-
+        System.out.print("\n");
         System.out.println("Задание 2");
         System.out.println("Напечатать только четные числа  в консоль без повторения");
         printEvenNumber();
@@ -30,22 +30,18 @@ public class Main {
     private static void printOodNumber() {
 
         List<Integer> nums = new ArrayList<>(List.of(1, 1, 2, 3, 4, 4, 5, 5, 6, 7));
-        Iterator<Integer> iterator = nums.iterator();
-        while (iterator.hasNext()) {
-            if (iterator.next() % 2 == 0) {
-                iterator.remove();
+        for (int num : nums) {
+            if (num % 2 != 0) {
+                System.out.print(num + " ");
             }
         }
-        System.out.println(nums);
     }
 
     private static void printEvenNumber() {
         List<Integer> nums = new ArrayList<>(List.of(1, 1, 2, 3, 4, 4, 5, 5, 6, 7));
-        Set<Object> numbAsSet = new HashSet<>();
-        /**
-         * заполняю множество, чтобы избежать повторений
-         */
-        for (Integer num : nums) {
+        Set<Integer> numbAsSet = new HashSet<>();
+         // заполняю множество, чтобы избежать повторений
+        for (int num : nums) {
             if (num % 2 == 0) {
                 numbAsSet.add(num);
             }
@@ -55,8 +51,7 @@ public class Main {
 
     /**
      * произвольный текст разбиваю на список по пробелу
-     * doubleValue - заполняю множество  повторений/ Только повторений
-     * удалить все повторения, используя итератор
+     * textAsSet - заполняю множество  уникальных значений
      */
     private static void printOriginal() {
         String text = "Ночь улица фонарь аптека " +
@@ -69,23 +64,16 @@ public class Main {
                 "Аптека улица фонарь ";
 
         List<String> listFromText = new ArrayList<>(List.of(text.split(" ")));
-        List<String> doubleValue = new ArrayList<>();
+        Set<String> textAsSet = new HashSet<>();
 
-        for (int i = 0; i < listFromText.size(); i++) {
-            int nextIndex = listFromText.lastIndexOf(listFromText.get(i));
-            if (i != nextIndex) {
-                doubleValue.add(listFromText.get(i));
+        for (String oneValue : listFromText) {
+            if (textAsSet.contains(oneValue)) {
+                textAsSet.remove(oneValue);
+            } else {
+                textAsSet.add(oneValue);
             }
         }
-        Iterator<String> iterator = listFromText.iterator();
-
-        while (iterator.hasNext()) {
-            //String stringFromLoop = iterator.next();
-            if (doubleValue.contains(iterator.next())) {
-                iterator.remove();
-            }
-        }
-        System.out.println(listFromText);
+        System.out.println(textAsSet);
     }
 
     private static void countDouble() {
@@ -94,17 +82,15 @@ public class Main {
                 "Это может быть произвольный набор слов " +
                 "литературный текст или произвольное предложение";
         List<String> listFromText = new ArrayList<>(List.of(text.split(" ")));
-        Iterator<String> iterator = listFromText.iterator();
+        Set<String> textAsSet = new HashSet<>();
         int counterDouble = 0;
-
-        while (iterator.hasNext()) {
-            String stringFromLoop = iterator.next(); // запомнили слово
-            iterator.remove();   // удалили его
-            if (listFromText.contains(stringFromLoop)) {
-                // если слово все-таки еще осталось
+        for (String oneValue : listFromText) {
+            if (textAsSet.contains(oneValue)) {
                 counterDouble = counterDouble + 2;
-                System.out.print(stringFromLoop + ' ');
+                System.out.print(oneValue + " ");
+                continue;
             }
+            textAsSet.add(oneValue);
         }
         System.out.print("\n");
         System.out.println(counterDouble);
